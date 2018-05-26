@@ -11,21 +11,21 @@
 		<nav id="navigation">
 			{{#if @blog.logo}}
 			<span class="blog-logo">
-				<a href="{{@blog.url}}"><img src="{{@blog.logo}}" alt="Blog Logo" /></a>
+				<a href="{{@blog.url}}"><img src="{{@blog.logo}}" alt="{{t "Blog Logo"}}" /></a>
 			</span>
 			{{else}}
 			<span id="home-button" class="nav-button">
-				<a class="home-button" href="{{@blog.url}}" title="Home"><i class="ic ic-arrow-left"></i> Home</a>
+				<a class="home-button" href="{{@blog.url}}" title="{{t "Home"}}"><i class="ic ic-arrow-left"></i> {{t "Home"}}</a>
 			</span>
 			{{/if}}
 			{{#if @blog.navigation}}
 			<span id="menu-button" class="nav-button">
-				<a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
+				<a class="menu-button"><i class="ic ic-menu"></i> {{t "Menu"}}</a>
 			</span>
 			{{/if}}
 		</nav>
 		<h1 class="post-title">{{{title}}}</h1>
-		<span class="post-meta">{{author}} | <time datetime="{{date format='YYYY-MM-DD'}}">{{date format="DD MMM YYYY"}}</time></span>
+		<span class="post-meta">{{authors separator=", "}} | <time datetime="{{date format='YYYY-MM-DD'}}">{{date format="DD MMM YYYY"}}</time></span>
 		{{#if feature_image}}<div class="post-cover cover" style="background-image: url('{{feature_image}}');"></div>{{/if}}
 	</div>
 </header>
@@ -59,47 +59,54 @@
 
 				<div class="clear"></div>
 
-				{{#author}}
-				<aside class="post-author">
-					<figure class="post-author-avatar avatar">
-						{{#if profile_image}}
-							<img src="{{profile_image}}" alt="{{name}}" />
-						{{/if}}
-					</figure>
-					<div class="post-author-bio">
-						<h4 class="post-author-name"><a href="{{url}}">{{name}}</a></h4>
-						{{#if bio}}
-							<p class="post-author-about">{{{bio}}}</p>
-						{{/if}}
-						{{#if location}}
-							<span class="post-author-location"><i class="ic ic-location"></i> {{location}}</span>
-						{{/if}}
-						{{#if website}}
-							<span class="post-author-website"><i class="ic ic-link"></i> <a href="{{website}}">Website</a></span>
-						{{/if}}
-						{{#if twitter}}
-							<span class="post-author-twitter"><i class="ic ic-twitter"></i> <a target="_blank" href="https://twitter.com/{{twitter}}">Twitter</a></span>
-						{{/if}}
-						{{#if facebook}}
-							<span class="post-author-facebook"><i class="ic ic-facebook"></i> <a target="_blank" href="https://facebook.com/{{facebook}}">Facebook</a></span>
-						{{/if}}
-					</div>
-					<div class="clear"></div>
-				</aside>
-				{{/author}}
+				{{#has author="count:>1"}}
+					<aside class="post-authors">
+						<p class="post-authors-info">{{t "This post was a collaboration between:"}}</p>
+						<p class="post-authors-authors">{{authors separator=", "}}</p>
+					</aside>
+        {{else}}
+					{{#author}}
+						<aside class="post-author">
+							<figure class="post-author-avatar avatar">
+								{{#if profile_image}}
+									<img src="{{profile_image}}" alt="{{name}}" />
+								{{/if}}
+							</figure>
+							<div class="post-author-bio">
+								<h4 class="post-author-name"><a href="{{url}}">{{name}}</a></h4>
+								{{#if bio}}
+									<p class="post-author-about">{{{bio}}}</p>
+								{{/if}}
+								{{#if location}}
+									<span class="post-author-location"><i class="ic ic-location"></i> {{location}}</span>
+								{{/if}}
+								{{#if website}}
+									<span class="post-author-website"><i class="ic ic-link"></i> <a href="{{website}}">{{t "Website"}}</a></span>
+								{{/if}}
+								{{#if twitter}}
+									<span class="post-author-twitter"><i class="ic ic-twitter"></i> <a target="_blank" href="https://twitter.com/{{twitter}}">Twitter</a></span>
+								{{/if}}
+								{{#if facebook}}
+									<span class="post-author-facebook"><i class="ic ic-facebook"></i> <a target="_blank" href="https://facebook.com/{{facebook}}">Facebook</a></span>
+								{{/if}}
+							</div>
+							<div class="clear"></div>
+						</aside>
+					{{/author}}
+        {{/has}}
 
 			</section>
 
 
 			<section class="post-comments">
-				<a id="show-disqus" class="post-comments-activate">Show Comments</a>
+				<a id="show-disqus" class="post-comments-activate">{{t "Show Comments"}}</a>
 			    <div id="disqus_thread"></div>
 			</section>
 
             {{#if @labs.subscribers}}
             <section class="post-subscribe">
-                {{subscribe_form placeholder="Your email address" form_class="post-subscribe-form" input_class="post-subscribe-input" button_class="post-subscribe-button"}}
-                <p>Get the latest posts delivered right to your inbox.</p>
+                {{subscribe_form placeholder=(t "Your email address") form_class="post-subscribe-form" input_class="post-subscribe-input" button_class="post-subscribe-button"}}
+                <p>{{t "Get the latest posts delivered right to your inbox."}}</p>
             </section>
             {{/if}}
 
